@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# آگورا | Agora — Web Platform
 
-## Getting Started
+پلتفرم ثبت دغدغه و سوال دانشجویی به‌صورت کاملاً ناشناس، همراه با پنل مدیریت
+برای دسته‌بندی، جست‌وجو و خروجی اکسل. ساخته‌شده با Next.js 14 (App Router) و
+Supabase (Postgres)، طبق مشخصات طراحی ارسالی (رنگ‌ها، تایپوگرافی، بخش‌های
+صفحه فرود، و ساختار داده).
 
-First, run the development server:
+## اجرای محلی
 
 ```bash
+npm install
+cp .env.example .env.local   # مقادیر را پر کنید (پایین توضیح داده شده)
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+سایت روی `http://localhost:3000` بالا می‌آید. پنل مدیریت: `/admin`.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## چک‌لیست راه‌اندازی
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **پروژه Supabase بسازید** (رایگان کافی است) و در SQL editor فایل
+   `supabase/schema.sql` را اجرا کنید تا جدول `questions` ساخته شود.
+2. مقادیر زیر را از تنظیمات پروژه Supabase در `.env.local` بگذارید:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `SUPABASE_SERVICE_ROLE_KEY` (فقط سمت سرور استفاده می‌شود، هرگز به
+     کلاینت ارسال نمی‌شود)
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY` (فعلاً استفاده نمی‌شود، برای توسعه‌های
+     بعدی نگه داشته شده)
+3. یک نام‌کاربری/رمزعبور برای ادمین در `ADMIN_USERNAME` / `ADMIN_PASSWORD`
+   تعیین کنید و یک رشتهٔ تصادفی طولانی در `ADMIN_SESSION_SECRET` بگذارید
+   (مثلاً با `openssl rand -hex 32`).
+4. روی [Vercel](https://vercel.com) دیپلوی کنید (پیشنهاد خود مشخصات پروژه):
+   ریپازیتوری را به Vercel وصل کنید، متغیرهای بالا را در تنظیمات پروژه وارد
+   کنید، و دیپلوی بزنید. دامنه دلخواه‌تان را بعداً وصل کنید.
 
-## Learn More
+## آنچه پیاده‌سازی شده
 
-To learn more about Next.js, take a look at the following resources:
+- **صفحه فرود** — دقیقاً طبق `design_system` ارسالی: پس‌زمینه Dark Forest
+  Green، کارت‌های Deep Sage، لهجه‌ی Warm Gold، تایپوگرافی Vazirmatn/RTL،
+  بخش‌های Hero / سپر حریم خصوصی / مسیر یک اندیشه / فرم ارسال / فوتر.
+- **فرم ثبت ناشناس** — بدون هیچ فیلد هویتی، محدودیت ۱۰ تا ۱۰۰ نویسه، انتخاب
+  دسته‌بندی، پیام‌های سیستمی خوش‌آمدگویی/موفقیت/هشدار دقیقاً از متن مشخصات.
+- **ضدهرزنامه** — Honeypot field + محدودیت نرخ درخواست بر اساس آی‌پی (آی‌پی
+  ذخیره نمی‌شود، فقط برای شمارش لحظه‌ای در حافظه استفاده می‌شود).
+- **API عمومی** `POST /api/questions` — درج در Supabase با ستون‌های
+  `id, question, topic, create_at` (دقیقاً همان `data_columns`).
+- **ورود ادمین** `/admin` — نام‌کاربری/رمزعبور در تنظیمات محیطی، کوکی نشست
+  امضاشده (HMAC)، بدون نیاز به سرویس احراز هویت جداگانه.
+- **پنل مدیریت** `/admin/dashboard` — نمایش همه سوالات، جست‌وجو بر اساس
+  دسته‌بندی (طبق `search_parameters: by topic only`)، مرتب‌سازی بر اساس
+  تاریخ، و دکمه خروجی اکسل.
+- **خروجی اکسل** `GET /api/admin/export` — ستون‌های `id, questions, topic`
+  دقیقاً طبق `excel_columns`، با پشتیبانی از فیلتر دسته‌بندی
+  (`filter_in_export: true`).
+- **بدون نیاز به لاگین کاربر عادی** و **ریسپانسیو** برای موبایل/لپ‌تاپ.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## آنچه هنوز باید اضافه کنید (خارج از دامنهٔ این تحویل)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **مرحله تحلیل هوش مصنوعی** (`step_4` در ورک‌فلو): یک Route جدا
+  (مثلاً `/api/admin/ai-analysis`) می‌تواند سوال را به API مدل زبانی
+  (Anthropic/OpenAI) بفرستد و تحلیل را ذخیره کند؛ چون کلید API و مدل دلخواه
+  مشخص نشده بود، این بخش پیاده نشده اما جدول و معماری برای افزودن آن آماده
+  است (طبق `ai_integration_impact: No database redesign needed`).
+  ستون `ai_analysis text` را می‌توانید بعداً به جدول اضافه کنید.
+- **ربات تلگرام / سفیر چرخشی برای انتشار پاسخ‌ها در گروه** — این نسخه فقط
+  «وب‌سایت» را پیاده کرده (طبق `platform: Website Platform & Topics Space`)؛
+  اتصال به تلگرام یک یکپارچه‌سازی جداست.
+- محدودیت نرخ فعلی حافظه‌محور است؛ برای دیپلوی چند-نمونه‌ای (اکثر PaaSها)
+  بهتر است با Upstash Redis یا مشابه جایگزین شود.
