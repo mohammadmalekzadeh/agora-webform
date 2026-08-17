@@ -360,7 +360,7 @@ function SubmitForm({
       }`}
     >
       <p className="text-body-md text-text-primary/90">
-        به بستری امن «آگورا» خوش آمدید. 🌿
+        به بستر امن «آگورا» خوش آمدید. 🌿
         <br />
         تمامی متن‌های ارسالی شما بدون نام و مشخصات ذخیره می‌شوند.
       </p>
@@ -451,6 +451,17 @@ function Footer() {
         <p className="text-caption text-text-secondary">
           © Agora Community — تمامی حقوق محفوظ است.
         </p>
+      <div>
+        <a
+          href="https://mallek.ir"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-caption text-text-secondary transition-colors duration-300 ease-eased-out hover:text-accent"
+        >
+          توسعه داده شده توسط
+          <span className="font-semibold text-stone">ملک</span>
+        </a>
+      </div>
       </div>
     </footer>
   );
