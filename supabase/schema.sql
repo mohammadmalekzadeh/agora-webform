@@ -5,7 +5,7 @@ create extension if not exists "pgcrypto";
 
 create table if not exists public.questions (
   id uuid primary key default gen_random_uuid(),
-  question text not null check (char_length(question) between 10 and 100),
+  question text not null check (char_length(question) between 10 and 1000),
   topic text not null,
   create_at timestamptz not null default now()
 );

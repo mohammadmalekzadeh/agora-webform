@@ -321,7 +321,7 @@ function SubmitForm({
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
-  const remaining = 100 - question.length;
+  const remaining = 1000 - question.length;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -331,8 +331,8 @@ function SubmitForm({
       setErrorMsg("لطفاً متن خود را فقط به‌صورت پیام متنی و حداقل ۱۰ نویسه ارسال کنید.");
       return;
     }
-    if (question.length > 100) {
-      setErrorMsg("متن سوال نباید بیشتر از ۱۰۰ نویسه باشد.");
+    if (question.length > 1000) {
+      setErrorMsg("متن سوال نباید بیشتر از ۱۰۰۰ نویسه باشد.");
       return;
     }
 
@@ -389,8 +389,8 @@ function SubmitForm({
             <textarea
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
-              maxLength={100}
-              rows={4}
+              maxLength={1000}
+              rows={6}
               placeholder="دغدغه، سوال یا اندیشه خود را بنویسید... (کاملاً ناشناس)"
               className="w-full rounded-input border border-stone/30 bg-surface p-4 text-body-md text-text-primary placeholder:text-text-secondary focus:border-accent"
             />
@@ -451,17 +451,19 @@ function Footer() {
         <p className="text-caption text-text-secondary">
           © Agora Community — تمامی حقوق محفوظ است.
         </p>
-      <div>
-        <a
-          href="https://mallek.ir"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-caption text-text-secondary transition-colors duration-300 ease-eased-out hover:text-accent"
-        >
-          توسعه داده شده توسط
-          <span className="font-semibold text-stone">ملک</span>
-        </a>
-      </div>
+        <div>
+          <a
+            href="https://mallek.ir"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-caption text-text-secondary transition-colors duration-300 ease-eased-out hover:text-accent"
+          >
+            توسعه داده شده توسط
+            <span className="font-semibold text-stone transition-colors duration-300 ease-eased-out group-hover:text-accent">
+              ملک
+            </span>
+          </a>
+        </div>
       </div>
     </footer>
   );
