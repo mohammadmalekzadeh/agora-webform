@@ -4,15 +4,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        bg: "#1E332D", // Dark Forest Green - primary background
-        surface: "#27423B", // Deep Sage - cards, chat boxes
-        accent: "#F3C86A", // Warm Gold - CTAs, AI elements
+        bg: "#0D1F1D", // Midnight Sanctuary - primary background
+        surface: "#234E47", // Ethereal Teal - cards, borders, layering
+        accent: "#FFC857", // Luminous Amber Gold - CTAs, AI elements
         text: {
-          primary: "#FAF6E6", // Soft Cream Glow
-          secondary: "#6B8B8A", // Muted Sage
+          primary: "#F4F1DE", // Pale Moonlight
+          secondary: "#8FA89B", // Sage Mist
         },
-        stone: "#C7B69D", // Warm Sand - borders, inactive icons
-        highlight: "#D88D56", // Terracotta - status, tags, soft warnings
+        stone: "#8FA89B", // Sage Mist - reused for borders / inactive icons
+        highlight: "#E06D53", // Terracotta Flame - status, tags, soft warnings
       },
       fontFamily: {
         fa: ["Vazirmatn", "Dana", "sans-serif"],
