@@ -343,13 +343,16 @@ function SubmitForm({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question, topic, website }),
       });
-      if (!res.ok) throw new Error();
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(data?.error || "ارسال با خطا مواجه شد. لطفاً دوباره تلاش کنید.");
+      }
       setStatus("sent");
       setQuestion("");
       onSubmitted?.();
-    } catch {
+    } catch (err) {
       setStatus("error");
-      setErrorMsg("ارسال با خطا مواجه شد. لطفاً دوباره تلاش کنید.");
+      setErrorMsg(err instanceof Error ? err.message : "ارسال با خطا مواجه شد. لطفاً دوباره تلاش کنید.");
     }
   }
 
